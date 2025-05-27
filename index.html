@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multiple C Programs with Copy Buttons</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Consolas, 'Courier New', monospace;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    h2 {
+      color: #333;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .notepad-container {
+      margin-bottom: 30px;
+    }
+
+    .copy-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .copy-btn:hover {
+      background-color: #45a049;
+    }
+
+    .notepad {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      white-space: pre-wrap;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 style="text-align: center;">C Programs with Copy Button</h1>
+
+  <!-- Repeat this block for each program -->
+  <!-- Program 1 -->
+  <div class="notepad-container">
+    <h2>Program 1</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code1')">Copy Code</button>
+    <div id="code1" class="notepad"><code>#define INF 999
+        #define MAX 100
+        int p[MAX], c[MAX][MAX], t[MAX][2];
+        int find(int v)
+        {
+            while (p[v])
+                v = p[v];
+            return v;
+        }
+        void union1(int i, int j)
+        {
+            p[j] = i;
+        }
+        void kruskal(int n)
+        {
+            int i, j, k, u, v, min, res1, res2, sum = 0;
+            for (k = 1; k < n; k++)
+            {
+                min = INF;
+                for (i = 1; i < n - 1; i++)
+                {
+                    for (j = 1; j <= n; j++)
+                    {
+                        if (i == j) continue;
+                        if (c[i][j] < min)
+                        {
+                            u = find(i);
+                            v = find(j);
+                            if (u != v)
+                            {
+                                res1 = i;
+                                res2 = j;
+                                min = c[i][j];
+                            }
+                        }
+                    }
+                }
+                union1(res1, find(res2));
+                t[k][1] = res1;
+                t[k][2] = res2;
+                sum = sum + min;
+            }
+            printf("\nCost of spanning tree is=%d", sum);
+            printf("\nEdgesof spanning tree are:\n");
+            for (i = 1; i < n; i++)
+                printf("%d -> %d\n", t[i][1], t[i][2]);
+        }
+        int main()
+        {
+            int i, j, n;
+            printf("\nEnter the n value:");
+            scanf("%d", & n);
+            for (i = 1; i <= n; i++)
+                p[i] = 0;
+            printf("\nEnter the graph data:\n");
+            for (i = 1; i <= n; i++)
+                for (j = 1; j <= n; j++)
+                    scanf("%d", & c[i][j]);
+            kruskal(n);
+            return 0;
+        }
+        </code></div>
+  </div>
+
+  <!-- Program 2 -->
+  <div class="notepad-container">
+    <h2>Program 2</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code2')">Copy Code</button>
+    <div id="code2" class="notepad"><code>#include <stdio.h>
+        #define INF 999
+        #define MAX 10
+        
+        int prim(int cost[MAX][MAX], int n, int start) {
+            int visited[MAX] = {0}, distance[MAX], from[MAX];
+            int i, j, min, total_cost = 0, u;
+        
+            // Initialize distance and from arrays
+            for (i = 0; i < n; i++) {
+                distance[i] = cost[start][i];
+                from[i] = start;
+            }
+        
+            visited[start] = 1;
+        
+            printf("\nEdges in the Minimum Spanning Tree:\n");
+        
+            for (i = 1; i < n; i++) {
+                min = INF;
+                u = -1;
+        
+                // Find the minimum edge
+                for (j = 0; j < n; j++) {
+                    if (!visited[j] && distance[j] < min) {
+                        min = distance[j];
+                        u = j;
+                    }
+                }
+        
+                if (u == -1) break; // No valid edge found
+        
+                visited[u] = 1;
+                total_cost += distance[u];
+                printf("%d -> %d  Cost = %d\n", from[u], u, distance[u]);
+        
+                // Update distances and from[]
+                for (j = 0; j < n; j++) {
+                    if (!visited[j] && cost[u][j] < distance[j]) {
+                        distance[j] = cost[u][j];
+                        from[j] = u;
+                    }
+                }
+            }
+        
+            return total_cost;
+        }
+        
+        int main() {
+            int cost[MAX][MAX], n, i, j, start, result;
+        
+            printf("Enter the number of vertices: ");
+            scanf("%d", &n);
+        
+            printf("Enter the cost adjacency matrix (use %d for INF):\n", INF);
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < n; j++) {
+                    scanf("%d", &cost[i][j]);
+                }
+            }
+        
+            printf("Enter the starting vertex (0 to %d): ", n - 1);
+            scanf("%d", &start);
+        
+            result = prim(cost, n, start);
+            printf("\nTotal cost of Minimum Spanning Tree: %d\n", result);
+        
+            return 0;
+        }
+        
+        </code></div>
+  </div>
+
+  <!-- Program 3 -->
+  <div class="notepad-container">
+    <h2>Program 3</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code3')">Copy Code</button>
+    <div id="code3" class="notepad"><code>REFER LAST PROGRAM</code></div>
+  </div>
+
+  <!-- Program 4 -->
+  <div class="notepad-container">
+    <h2>Program 4</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code4')">Copy Code</button>
+    <div id="code4" class="notepad"><code>
+        #include <stdio.h>
+            #define INFINITY 9999
+            #define MAX 10
+            
+            void dijkstra(int graph[MAX][MAX], int n, int start) {
+                int distance[MAX], visited[MAX], count, mindistance, nextnode = 0, i, j;
+            
+                // Initialize distance[] and visited[]
+                for (i = 0; i < n; i++) {
+                    distance[i] = graph[start][i];
+                    visited[i] = 0;
+                }
+            
+                distance[start] = 0;
+                visited[start] = 1;
+                count = 1;
+            
+                while (count < n - 1) {
+                    mindistance = INFINITY;
+            
+                    // Find the next node with minimum distance
+                    for (i = 0; i < n; i++) {
+                        if (distance[i] < mindistance && !visited[i]) {
+                            mindistance = distance[i];
+                            nextnode = i;
+                        }
+                    }
+            
+                    visited[nextnode] = 1;
+            
+                    // Update the distances of the adjacent nodes
+                    for (i = 0; i < n; i++) {
+                        if (!visited[i]) {
+                            if (mindistance + graph[nextnode][i] < distance[i]) {
+                                distance[i] = mindistance + graph[nextnode][i];
+                            }
+                        }
+                    }
+            
+                    count++;
+                }
+            
+                // Print the shortest distances
+                printf("\nShortest distances from node %d:\n", start);
+                for (i = 0; i < n; i++) {
+                    if (i != start) {
+                        printf("To node %d: %d\n", i, distance[i]);
+                    }
+                }
+            }
+            
+            int main() {
+                int graph[MAX][MAX], i, j, n, start;
+            
+                printf("Enter number of vertices: ");
+                scanf("%d", &n);
+            
+                printf("Enter the adjacency matrix (use %d for infinity):\n", INFINITY);
+                for (i = 0; i < n; i++) {
+                    for (j = 0; j < n; j++) {
+                        scanf("%d", &graph[i][j]);
+                    }
+                }
+            
+                printf("Enter the starting node (0 to %d): ", n - 1);
+                scanf("%d", &start);
+            
+                dijkstra(graph, n, start);
+            
+                return 0;
+            }
+            
+    </code></div>
+  </div>
+
+  <!-- Program 5 -->
+  <div class="notepad-container">
+    <h2>Program 5</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code5')">Copy Code</button>
+    <div id="code5" class="notepad"><code>#include<stdio.h>
+        #include<conio.h>
+        int temp[10],k=0;
+        void sort(int a[][10],int id[],int n)
+        {
+            int i,j;
+            for(i=1; i<=n; i++)
+            {
+                if(id[i]==0)
+                {
+                    id[i]=-1;
+                    temp[++k]=i;
+                    for(j=1; j<=n; j++)
+                    {
+                        if(a[i][j]==1 && id[j]!=-1)
+                            id[j]--;
+                    }
+                    i=0;
+                }
+            }
+        }
+        void main()
+        {
+            int a[10][10],id[10],n,i,j;
+            printf("\nEnter the n value:");
+            scanf("%d",&n);
+            for(i=1; i<=n; i++)
+                id[i]=0;
+            printf("\nEnter the graph data:\n");
+            for(i=1; i<=n; i++)
+                for(j=1; j<=n; j++)
+                {
+                    scanf("%d",&a[i][j]);
+                    if(a[i][j]==1)
+                        id[j]++;
+                }
+            sort(a,id,n);
+            if(k!=n)
+                printf("\nTopological ordering not possible");
+            else
+            {
+                printf("\nTopological ordering is:");
+                for(i=1; i<=k; i++)
+                    printf("%d ",temp[i]);
+            }
+            getch();
+        }</code></div>
+  </div>
+
+  <!-- Program 6 -->
+  <div class="notepad-container">
+    <h2>Program 6</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code6')">Copy Code</button>
+    <div id="code6" class="notepad"><code>#include<stdio.h>
+        int w[10],p[10],n;
+        int max(int a,int b)
+        {
+            return a>b?a:b;
+        }
+        int knap(int i,int m)
+        {
+            if(i==n) return w[i]>m?0:p[i];
+            if(w[i]>m) return knap(i+1,m);
+            return max(knap(i+1,m),knap(i+1,m-w[i])+p[i]);
+        }
+        int main()
+        {
+            int m,i,max_profit;
+            printf("\nEnter the no. of objects:");
+            scanf("%d",&n);
+            printf("\nEnter the knapsack capacity:");
+            scanf("%d",&m);
+            printf("\nEnter profit followed by weight:\n");
+            for(i=1; i<=n; i++)
+                scanf("%d %d",&p[i],&w[i]);
+            max_profit=knap(1,m);
+            printf("\nMax profit=%d",max_profit);
+            return 0;
+        }</code></div>
+  </div>
+
+  <!-- Program 7 -->
+  <div class="notepad-container">
+    <h2>Program 7</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code7')">Copy Code</button>
+    <div id="code7" class="notepad"><code>#include <stdio.h>
+        #define MAX 50
+        int p[MAX], w[MAX], x[MAX];
+        double maxprofit;
+        int n, m, i;
+        void greedyKnapsack(int n, int w[], int p[], int m)
+        {
+            double ratio[MAX];
+        
+        // Calculate the ratio of profit to weight for each item
+            for (i = 0; i < n; i++)
+            {
+                ratio[i] = (double)p[i] / w[i];
+            }
+        // Sort items based on the ratio in non-increasing order
+            for (i = 0; i < n - 1; i++)
+            {
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (ratio[i] < ratio[j])
+                    {
+                        double temp = ratio[i];
+                        ratio[i] = ratio[j];
+                        ratio[j] = temp;
+        
+                        int temp2 = w[i];
+                        w[i] = w[j];
+                        w[j] = temp2;
+        
+                        temp2 = p[i];
+                        p[i] = p[j];
+                        p[j] = temp2;
+                    }
+                }
+            }
+            int currentWeight = 0;
+            maxprofit = 0.0;
+        // Fill the knapsack with items
+            for (i = 0; i < n; i++)
+            {
+                if (currentWeight + w[i] <= m)
+                {
+                    x[i] = 1; // Item i is selected
+                    currentWeight += w[i];
+                    maxprofit += p[i];
+                }
+                else
+                {
+        // Fractional part of item i is selected
+                    x[i] = (m - currentWeight) / (double)w[i];
+                    maxprofit += x[i] * p[i];
+                    break;
+                }
+            }
+            printf("Optimal solution for greedy method: %.1f\n", maxprofit);
+            printf("Solution vector for greedy method: ");
+            for (i = 0; i < n; i++)
+                printf("%d\t", x[i]);
+        }
+        int main()
+        {
+            printf("Enter the number of objects: ");
+            scanf("%d", &n);
+            printf("Enter the objects' weights: ");
+            for (i = 0; i < n; i++)
+                scanf("%d", &w[i]);
+            printf("Enter the objects' profits: ");
+            for (i = 0; i < n; i++)
+                scanf("%d", &p[i]);
+            printf("Enter the maximum capacity: ");
+            scanf("%d", &m);
+            greedyKnapsack(n, w, p, m);
+            return 0;
+        }
+        </code></div>
+  </div>
+
+  <!-- Program 8 -->
+  <div class="notepad-container">
+    <h2>Program 8</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code8')">Copy Code</button>
+    <div id="code8" class="notepad"><code>#include<stdio.h>
+        #define MAX 10
+        int s[MAX],x[MAX],d;
+        void sumofsub(int p,int k,int r)
+        {
+            int i;
+            x[k]=1;
+            if((p+s[k])==d)
+            {
+                for(i=1; i<=k; i++)
+                    if(x[i]==1)
+                        printf("%d ",s[i]);
+                printf("\n");
+            }
+            else if(p+s[k]+s[k+1]<=d)
+                sumofsub(p+s[k],k+1,r
+                         -s[k]);
+            if((p+r
+                    -s[k]>=d) && (p+s[k+1]<=d))
+            {
+                x[k]=0;
+                sumofsub(p,k+1,r
+                         -s[k]);
+            }
+        }
+        int main()
+        {
+            int i,n,sum=0;
+            printf("\nEnter the n value:");
+            scanf("%d",&n);
+            printf("\nEnter the set in increasing order:");
+            for(i=1; i<=n; i++)
+                scanf("%d",&s[i]);
+            printf("\nEnter the max subset value:");
+            scanf("%d",&d);
+            for(i=1; i<=n; i++)
+                sum=sum+s[i];
+            if(sum<d || s[1]>d)
+                printf("\nNo subset possible");
+            else
+                sumofsub(0,1,sum);
+            return 0;
+        }</code></div>
+  </div>
+
+  <!-- Program 9 -->
+  <div class="notepad-container">
+    <h2>Program 12</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code9')">Copy Code</button>
+    <div id="code9" class="notepad"><code>// Paste your C code for Program 9 here#include <stdio.h>
+        #include <stdlib.h>
+        #include <stdbool.h>
+        
+        // Function to print the solution
+        void printSolution(int **board, int N)
+        {
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    printf("%s ", board[i][j] ? "Q" : "#");
+                }
+                printf("\n");
+            }
+        }
+        
+        // Function to check if a queen can be placed on board[row][col]
+        bool isSafe(int **board, int N, int row, int col)
+        {
+            int i, j;
+        
+            // Check this row on left side
+            for (i = 0; i < col; i++)
+            {
+                if (board[row][i])
+                {
+                    return false;
+                }
+            }
+        
+            // Check upper diagonal on left side
+            for (i = row, j = col; i >= 0 && j >= 0; i--, j--)
+            {
+                if (board[i][j])
+                {
+                    return false;
+                }
+            }
+        
+            // Check lower diagonal on left side
+            for (i = row, j = col; j >= 0 && i < N; i++, j--)
+            {
+                if (board[i][j])
+                {
+                    return false;
+                }
+            }
+        
+            return true;
+        }
+        
+        // A recursive utility function to solve N Queen problem
+        bool solveNQUtil(int **board, int N, int col)
+        {
+            // If all queens are placed, then return true
+            if (col >= N)
+            {
+                return true;
+            }
+        
+            // Consider this column and try placing this queen in all rows one by one
+            for (int i = 0; i < N; i++)
+            {
+                if (isSafe(board, N, i, col))
+                {
+                    // Place this queen in board[i][col]
+                    board[i][col] = 1;
+        
+                    // Recur to place rest of the queens
+                    if (solveNQUtil(board, N, col + 1))
+                    {
+                        return true;
+                    }
+        
+                    // If placing queen in board[i][col] doesn't lead to a solution,
+                    // then remove queen from board[i][col]
+                    board[i][col] = 0; // BACKTRACK
+                }
+            }
+        
+            // If the queen cannot be placed in any row in this column col, then return false
+            return false;
+        }
+        
+        bool solveNQ(int N)
+        {
+            int **board = (int **)malloc(N * sizeof(int *));
+            for (int i = 0; i < N; i++)
+            {
+                board[i] = (int *)malloc(N * sizeof(int));
+                for (int j = 0; j < N; j++)
+                {
+                    board[i][j] = 0;
+                }
+            }
+        
+            if (!solveNQUtil(board, N, 0))
+            {
+                printf("Solution does not exist\n");
+                for (int i = 0; i < N; i++)
+                {
+                    free(board[i]);
+                }
+                free(board);
+                return false;
+            }
+        
+            printSolution(board, N);
+        
+            for (int i = 0; i < N; i++)
+            {
+                free(board[i]);
+            }
+            free(board);
+            return true;
+        }
+        
+        int main()
+        {
+            int N;
+            printf("Enter the number of queens: ");
+            scanf("%d", &N);
+            solveNQ(N);
+            return 0;
+        }</code></div>
+  </div>
+
+  <!-- Program 10 -->
+  <div class="notepad-container">
+    <h2>Program 3a</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code10')">Copy Code</button>
+    <div id="code10" class="notepad"><code>#include <stdio.h>
+        #define INF 999
+        #define MAX 10
+        
+        int min(int a, int b) {
+            return (a < b) ? a : b;
+        }
+        
+        void floyd(int p[MAX][MAX], int n) {
+            int i, j, k;
+            for (k = 0; k < n; k++) {
+                for (i = 0; i < n; i++) {
+                    for (j = 0; j < n; j++) {
+                        p[i][j] = min(p[i][j], p[i][k] + p[k][j]);
+                    }
+                }
+            }
+        }
+        
+        int main() {
+            int a[MAX][MAX], n, i, j;
+        
+            printf("Enter the number of vertices: ");
+            scanf("%d", &n);
+        
+            printf("Enter the adjacency matrix (use %d for INF):\n", INF);
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < n; j++) {
+                    scanf("%d", &a[i][j]);
+                }
+            }
+        
+            floyd(a, n);
+        
+            printf("\nAll-Pairs Shortest Path Matrix:\n");
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < n; j++) {
+                    if (a[i][j] == INF)
+                        printf("INF ");
+                    else
+                        printf("%3d ", a[i][j]);
+                }
+                printf("\n");
+            }
+        
+            return 0;
+        }
+        
+        </code></div>
+  </div>
+
+  <!-- Program 11 -->
+  <div class="notepad-container">
+    <h2>Program 3b</h2>
+    <button class="copy-btn" onclick="copyToClipboard('code11')">Copy Code</button>
+    <div id="code11" class="notepad"><code>#include<stdio.h>
+        void warsh(int p[][10],int n)
+        {
+            int i,j,k;
+            for(k=1; k<=n; k++)
+                for(i=1; i<=n; i++)
+                    for(j=1; j<=n; j++)
+                        p[i][j]=p[i][j] || p[i][k] && p[k][j];
+        }
+        int main()
+        {
+            int a[10][10],n,i,j;
+            printf("\nEnter the n value:");
+            scanf("%d",&n);
+            printf("\nEnter the graph data:\n");
+            for(i=1; i<=n; i++)
+                for(j=1; j<=n; j++)
+                    scanf("%d",&a[i][j]);
+            warsh(a,n);
+            printf("\nResultant path matrix\n");
+            for(i=1; i<=n; i++)
+            {
+                for(j=1; j<=n; j++)
+                    printf("%d ",a[i][j]);
+                printf("\n");
+            }
+            return 0;
+        }
+        </code></div>
+  </div>
+
+  
+  
+
+  <script>
+    function copyToClipboard(id) {
+      const codeBlock = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(codeBlock).then(() => {
+        alert("Code copied to clipboard!");
+      }, (err) => {
+        alert("Failed to copy code: " + err);
+      });
+    }
+  </script>
+
+</body>
+</html>
